@@ -1,0 +1,14 @@
+.divider_section {
+    margin-top: 22px;
+    border-top: 1px solid #ccc;
+    position: relative;
+    text-align: center;
+}
+
+.divider_section span {
+    position: relative;
+    display: inline-block;
+    background: #fff;
+    padding: 0 10px;
+    top: -14px;
+}
