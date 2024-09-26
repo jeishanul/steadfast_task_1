@@ -1,5 +1,7 @@
-<label for="name">Template Name</label>
-<input type="text" id="name" name="name" required>
+<div class="card-body">
+    <x-input-group label="Template Name" type="text" name="name" id="name" placeholder="Enter your template name"
+        value="{{ $formTemplate->name ?? old('name') }}" required />
 
-<label for="description">Description</label>
-<textarea id="description" name="description"></textarea>
+    <x-textarea-group label="Description" type="text" name="description" id="description"
+        placeholder="Enter your category description" value="{{ $formTemplate->description ?? old('description') }}" />
+</div>

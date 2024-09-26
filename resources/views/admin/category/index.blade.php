@@ -33,10 +33,14 @@
                                     <td>{{ Str::limit($category->description ?? 'N/A', 50) }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.form.template.create', $category->id) }}"
-                                                class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route('admin.form.template.index', $category) }}"
+                                                class="btn btn-success">
+                                                <i class="fa fa-file"></i>
+                                            </a>
                                             <a href="{{ route('admin.category.edit', $category->id) }}"
-                                                class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                                class="btn btn-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
                                             <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                         </div>
                                     </td>
@@ -49,6 +53,11 @@
                         @endif
                     </tbody>
                 </table>
+            </div>
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                    {{ $categories->links('pagination::bootstrap-4') }}
+                </ul>
             </div>
         </div>
     </div>

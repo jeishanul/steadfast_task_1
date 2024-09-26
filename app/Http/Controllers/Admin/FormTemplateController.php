@@ -11,46 +11,49 @@ class FormTemplateController extends Controller
 {
     public function index(Category $category)
     {
-        $formTemplates = $category->formTemplates;
+        $formTemplates = $category->formTemplates()->paginate(10);;
         return view('admin.form_template.index', compact('formTemplates', 'category'));
     }
 
-    public function create($categoryId)
+    public function create(Category $category)
     {
-        $category = Category::findOrFail($categoryId);
         return view('admin.form_template.create', compact('category'));
     }
 
-    public function store(Request $request, $categoryId)
+    public function store(Request $request, Category $category)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $formTemplate = new FormTemplate($validated);
-        $formTemplate->category_id = $categoryId;
-        $formTemplate->save();
+        $request->user()->formTemplates()->create([
+            'category_id' => $category->id,
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
 
-        return redirect()->route('admin.form.template.index', $categoryId)->with('success', 'Form template created successfully');
+        return redirect()->route('admin.form.template.index', $category)->with('success', 'Form template created successfully');
     }
 
-    public function edit($id)
+    public function edit(FormTemplate $formTemplate)
     {
-        $formTemplate = FormTemplate::findOrFail($id);
         return view('admin.form_template.edit', compact('formTemplate'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, FormTemplate $formTemplate)
     {
-        $formTemplate = FormTemplate::findOrFail($id);
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $formTemplate->update($validated);
-        return redirect()->route('form_templates.index', $formTemplate->category_id)->with('success', 'Form template updated successfully');
+        $formTemplate->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+        
+        return redirect()->route('admin.form.template.index', $formTemplate->category_id)->with('success', 'Form template updated successfully');
     }
 
     public function destroy($id)

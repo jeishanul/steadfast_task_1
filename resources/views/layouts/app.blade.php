@@ -35,6 +35,7 @@
     @if (session()->has('success') || session()->has('error'))
         <x-notification :type="session()->has('success') ? 'success' : 'error'" :message="session('success') ?? session('error')" />
     @endif
+    @stack('scripts')
 </body>
 
 </html>

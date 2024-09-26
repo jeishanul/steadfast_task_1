@@ -2,62 +2,61 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\FieldTypes;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\FormField;
 use App\Models\FormTemplate;
 use Illuminate\Http\Request;
 
 class FormFieldController extends Controller
 {
-    public function index(Category $category)
+    public function create(FormTemplate $formTemplate)
     {
-        $formTemplates = $category->formTemplates;
-        return view('admin.form_template.index', compact('formTemplates'));
+        $fieldTypes = FieldTypes::cases();
+        return view('admin.form_field.create', compact('formTemplate', 'fieldTypes'));
     }
 
-    public function create($categoryId)
-    {
-        $category = Category::findOrFail($categoryId);
-        return view('admin.form_template.create', compact('category'));
-    }
-
-    public function store(Request $request, $categoryId)
+    public function store(Request $request, $formTemplateId)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'label' => 'required|string|max:255',
+            'field_type' => 'required|in:' . implode(',', FieldTypes::cases()),
+            'options' => 'nullable|json',
+            'is_required' => 'boolean',
         ]);
 
-        $formTemplate = new FormTemplate($validated);
-        $formTemplate->category_id = $categoryId;
-        $formTemplate->save();
+        $formField = new FormField($validated);
+        $formField->form_template_id = $formTemplateId;
+        $formField->save();
 
-        return redirect()->route('admin.form.template.index', $categoryId)->with('success', 'Form template created successfully');
+        return redirect()->route('form_templates.index', $formTemplateId)->with('success', 'Form field created successfully');
     }
 
     public function edit($id)
     {
-        $formTemplate = FormTemplate::findOrFail($id);
-        return view('admin.form_template.edit', compact('formTemplate'));
+        $formField = FormField::findOrFail($id);
+        return view('form_fields.edit', compact('formField'));
     }
 
     public function update(Request $request, $id)
     {
-        $formTemplate = FormTemplate::findOrFail($id);
+        $formField = FormField::findOrFail($id);
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'label' => 'required|string|max:255',
+            'field_type' => 'required|in:text,textarea,checkbox,radio,select,number,date',
+            'options' => 'nullable|json',
+            'is_required' => 'boolean',
         ]);
 
-        $formTemplate->update($validated);
-        return redirect()->route('form_templates.index', $formTemplate->category_id)->with('success', 'Form template updated successfully');
+        $formField->update($validated);
+        return redirect()->route('form_templates.index', $formField->form_template_id)->with('success', 'Form field updated successfully');
     }
 
     public function destroy($id)
     {
-        $formTemplate = FormTemplate::findOrFail($id);
-        $categoryId = $formTemplate->category_id;
-        $formTemplate->delete();
-        return redirect()->route('form_templates.index', $categoryId)->with('success', 'Form template deleted successfully');
+        $formField = FormField::findOrFail($id);
+        $formTemplateId = $formField->form_template_id;
+        $formField->delete();
+        return redirect()->route('form_templates.index', $formTemplateId)->with('success', 'Form field deleted successfully');
     }
 }
