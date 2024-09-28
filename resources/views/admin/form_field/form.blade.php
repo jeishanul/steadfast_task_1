@@ -17,12 +17,12 @@
                 <div class="form-group text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="inputs[1][is_required]" id="is_required1"
-                            value="true">
+                            value="1">
                         <label class="form-check-label" for="is_required1">{{ __('Required') }}</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="inputs[1][is_required]" id="is_required2"
-                            value="false" checked>
+                            value="0" checked>
                         <label class="form-check-label" for="is_required2">{{ __('Optional') }}</label>
                     </div>
                 </div>

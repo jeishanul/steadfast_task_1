@@ -48,12 +48,12 @@
                                         <div class="form-group text-center">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="inputs[${i}][is_required]" id="is_required${i}"
-                                                    value="true">
+                                                    value="1">
                                                 <label class="form-check-label" for="is_required${i}">{{ __('Required') }}</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="inputs[${i}][is_required]" id="is_required${i}"
-                                                    value="false" checked>
+                                                    value="0" checked>
                                                 <label class="form-check-label" for="is_required${i}">{{ __('Optional') }}</label>
                                             </div>
                                         </div>

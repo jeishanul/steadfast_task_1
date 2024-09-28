@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\FieldTypes;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FormFieldRequest;
 use App\Models\FormField;
 use App\Models\FormTemplate;
 use Illuminate\Http\Request;
@@ -16,20 +17,20 @@ class FormFieldController extends Controller
         return view('admin.form_field.create', compact('formTemplate', 'fieldTypes'));
     }
 
-    public function store(Request $request, $formTemplateId)
+    public function store(FormFieldRequest $request, FormTemplate $formTemplate)
     {
-        $validated = $request->validate([
-            'label' => 'required|string|max:255',
-            'field_type' => 'required|in:' . implode(',', FieldTypes::cases()),
-            'options' => 'nullable|json',
-            'is_required' => 'boolean',
-        ]);
 
-        $formField = new FormField($validated);
-        $formField->form_template_id = $formTemplateId;
-        $formField->save();
+        foreach ($request->inputs as $input) {
+            $formTemplate->formFields()->create([
+                'name' => strtolower(str_replace(' ', '_', $input['label'])),
+                'label' => $input['label'],
+                'type' => $input['field_type'],
+                // 'options' => json_encode($input['options']),
+                'is_required' => $input['is_required'],
+            ]);
+        }
 
-        return redirect()->route('form_templates.index', $formTemplateId)->with('success', 'Form field created successfully');
+        return redirect()->route('admin.form.template.index', $formTemplate)->withSuccess(__('Form field created successfully'));
     }
 
     public function edit($id)
