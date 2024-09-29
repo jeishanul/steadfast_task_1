@@ -81,21 +81,23 @@
         });
         $(document).on('click', '.add-option-field-btn', function() {
             const key = $(this).attr('data-key');
+            const optionIndex = $('#option-field-container' + key).children().length;
+
             $('#option-field-container' + key).append(`<div class="row">
-                                                        <div class="col-lg-11">
-                                                            <x-input-group label="Option Name" type="text"
-                                                                name="inputs[${key}][options][]"
-                                                                id="option_name${key}"
-                                                                placeholder="Enter your option name" required />
-                                                        </div>
-                                                        <div class="col-lg-1 margin_top_35">
-                                                            <button type="button"
-                                                                class="btn btn-danger btn-sm remove-option-field-btn">
-                                                                <i class="fas fa-times"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>`);
+                <div class="col-lg-11">
+                    <x-input-group label="Option Name" type="text"
+                        name="inputs[${key}][options][${optionIndex}]"
+                        id="option_name${key}_${optionIndex}"
+                        placeholder="Enter your option name" required />
+                </div>
+                <div class="col-lg-1 margin_top_35">
+                    <button type="button" class="btn btn-danger btn-sm remove-option-field-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>`);
         });
+
         $(document).on('click', '.remove-option-field-btn', function() {
             $(this).closest('.row').remove();
         });

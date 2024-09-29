@@ -28,6 +28,8 @@
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </div>
+
+                            <!-- Modal -->
                             <div class="modal fade" id="addOptionField{{ $key }}" tabindex="-1"
                                 role="dialog" aria-labelledby="addOptionFieldTitle{{ $key }}"
                                 aria-hidden="true">
@@ -47,8 +49,8 @@
                                                 <div class="row">
                                                     <div class="col-lg-11">
                                                         <x-input-group label="Option Name" type="text"
-                                                            name="inputs[{{ $key }}][options][]"
-                                                            id="option_name{{ $key }}"
+                                                            name="inputs[{{ $key }}][options][0]"
+                                                            id="option_name{{ $key }}_0"
                                                             placeholder="Enter your option name" required />
                                                     </div>
                                                     <div class="col-lg-1 margin_top_35">

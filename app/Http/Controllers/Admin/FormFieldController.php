@@ -21,6 +21,7 @@ class FormFieldController extends Controller
 
     public function store(FormFieldRequest $request, FormTemplate $formTemplate)
     {
+        dd($request->all());
         $fields = collect($request->inputs)->map(function ($input) {
             return [
                 'name' => strtolower(str_replace(' ', '_', $input['label'])),
