@@ -43,9 +43,9 @@ class SubmittedFormController extends Controller
         return redirect()->route('user.submitted.forms.index')->with('success', 'Form submitted successfully');
     }
 
-    public function showSubmission($id)
+    public function showSubmission(SubmittedForm $submittedForm)
     {
-        $submission = SubmittedForm::with('formSubmissionData')->findOrFail($id);
-        return view('form_submissions.show', compact('submission'));
+        $submission = $submittedForm->load('formSubmissionData');
+        return view('user.form_submissions.show', compact('submission'));
     }
 }
