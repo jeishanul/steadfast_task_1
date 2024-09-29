@@ -4,8 +4,8 @@
         {!! $required ? '<span class="text-danger">*</span>' : '' !!}
     </label>
 
-    <select class="form-control @error($name) is-invalid @enderror" name="{{ $name }}"
-        id="{{ $id }}">
+    <select class="form-control field_type @error($name) is-invalid @enderror" name="{{ $name }}"
+        {{ $required ? 'required' : '' }} data-attribute="{{ $attribute }}" id="{{ $id }}">
         <option selected disabled>{{ __($placeholder) }}</option>
         {{ $slot }}
     </select>

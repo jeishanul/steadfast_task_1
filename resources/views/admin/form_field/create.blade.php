@@ -28,7 +28,7 @@
 @endsection
 @push('scripts')
     <script>
-        let i = 1
+        let i = {{ count($fields) }} + 1;
         $(document).on('click', '#add-field', function() {
             i++
             $('#field-container').append(`<div class="row">
@@ -38,11 +38,12 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <x-select-group label="Field Type" name="inputs[${i}][field_type]" id="field_type${i}"
-                                            placeholder="Select your form field type" required>
+                                            placeholder="Select your form field type" required attribute="${i}">
                                             @foreach ($fieldTypes as $type)
                                                 <option value="{{ $type }}">{{ ucfirst($type->value) }}</option>
                                             @endforeach
                                         </x-select-group>
+                                        <button type="button" class="btn btn-primary btn-sm add-option-field d-none" id="add-option-field${i}"><i class="fas fa-plus"></i></button>
                                     </div>
                                     <div class="col-lg-3 margin_top_40">
                                         <div class="form-group text-center">
@@ -67,6 +68,35 @@
         });
 
         $(document).on('click', '.remove-field', function() {
+            $(this).closest('.row').remove();
+        });
+        $(document).on('click', '.field_type', function() {
+            const type = $(this).val();
+            const attribute = $(this).attr('data-attribute');
+            if (type == 'select' || type == 'radio') {
+                $('#add-option-field' + attribute).removeClass('d-none');
+            } else {
+                $('#add-option-field' + attribute).addClass('d-none');
+            }
+        });
+        $(document).on('click', '.add-option-field-btn', function() {
+            const key = $(this).attr('data-key');
+            $('#option-field-container' + key).append(`<div class="row">
+                                                        <div class="col-lg-11">
+                                                            <x-input-group label="Option Name" type="text"
+                                                                name="inputs[${key}][options][]"
+                                                                id="option_name${key}"
+                                                                placeholder="Enter your option name" required />
+                                                        </div>
+                                                        <div class="col-lg-1 margin_top_35">
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-sm remove-option-field-btn">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>`);
+        });
+        $(document).on('click', '.remove-option-field-btn', function() {
             $(this).closest('.row').remove();
         });
     </script>

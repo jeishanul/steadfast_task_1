@@ -25,22 +25,6 @@
                     </ul>
                 </li>
             </ul>
-
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a id="dropdownSubMenu1" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" class="nav-link dropdown-toggle">{{ __('Form Template') }}</a>
-                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li>
-                            <a href="{{ route('admin.category.index') }}" class="dropdown-item">{{ __('List') }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.category.create') }}"
-                                class="dropdown-item">{{ __('Create') }}</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
         </div>
 
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">

@@ -50,10 +50,6 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(FormFieldController::class)->group(function () {
             Route::get('form-template/{formTemplate}/field/create',  'create')->name('admin.form.field.create');
             Route::post('form-template/{formTemplate}/field/store', 'store')->name('admin.form.field.store');
-
-            Route::get('/fields/{id}/edit', 'edit')->name('form_fields.edit');
-            Route::put('/fields/{id}', 'update')->name('form_fields.update');
-            Route::delete('/fields/{id}', 'destroy')->name('form_fields.destroy');
         });
     });
     // Routes for User

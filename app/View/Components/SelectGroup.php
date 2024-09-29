@@ -17,6 +17,7 @@ class SelectGroup extends Component
         public string $name,
         public bool $required = false,
         public string $placeholder = '',
+        public string $attribute = '',
     )
     {
     }
