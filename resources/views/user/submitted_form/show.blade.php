@@ -22,15 +22,27 @@
                 <div class="card-body">
                     <div class="row">
                         @foreach ($formTemplate->formFields as $key => $field)
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="{{ $field->name }}">{{ $field->label }} {!! $field->is_required == 1 ? '<span class="text-danger">*</span>' : '' !!}</label>
-                                    <input type="{{ $field->type }}" class="form-control"
-                                        name="formFields[{{ $field->id }}]{{ $field->name }}" id="{{ $field->name }}"
-                                        placeholder="Enter your {{ $field->label }}"
-                                        {{ $field->is_required == 1 ? 'required' : '' }}>
+                            @if ($field->type == 'textarea')
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ $field->name }}">{{ $field->label }} {!! $field->is_required == 1 ? '<span class="text-danger">*</span>' : '' !!}</label>
+                                        <textarea type="{{ $field->type }}" class="form-control" name="formFields[{{ $field->id }}]{{ $field->name }}"
+                                            id="{{ $field->name }}" placeholder="Enter your {{ $field->label }}" rows="5"
+                                            {{ $field->is_required == 1 ? 'required' : '' }}></textarea>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ $field->name }}">{{ $field->label }}
+                                            {!! $field->is_required == 1 ? '<span class="text-danger">*</span>' : '' !!}</label>
+                                        <input type="{{ $field->type }}" class="form-control"
+                                            name="formFields[{{ $field->id }}]{{ $field->name }}"
+                                            id="{{ $field->name }}" placeholder="Enter your {{ $field->label }}"
+                                            {{ $field->is_required == 1 ? 'required' : '' }}>
+                                    </div>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>

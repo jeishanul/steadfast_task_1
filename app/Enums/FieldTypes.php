@@ -10,6 +10,4 @@ enum FieldTypes : string
     case DATE = 'date';
     case CHECKBOX = 'checkbox';
     case TEXTAREA = 'textarea';
-    case SELECT = 'select';
-    case RADIO = 'radio';
 }
