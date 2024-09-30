@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -22,7 +21,11 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        request()->user()->categories()->create($request->validated());
+        request()->user()->categories()->create([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
         return to_route('admin.category.index')->withSuccess(__('Category created successfully'));
     }
 
@@ -33,7 +36,11 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
-        $category->update($request->validated());
+        $category->update([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+        
         return to_route('admin.category.index')->withSuccess(__('Category updated successfully'));
     }
 

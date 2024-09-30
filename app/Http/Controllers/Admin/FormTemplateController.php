@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FormTemplateRequest;
 use App\Models\Category;
 use App\Models\FormTemplate;
-use Illuminate\Http\Request;
 
 class FormTemplateController extends Controller
 {
@@ -20,13 +20,8 @@ class FormTemplateController extends Controller
         return view('admin.form_template.create', compact('category'));
     }
 
-    public function store(Request $request, Category $category)
+    public function store(FormTemplateRequest $request, Category $category)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
         $request->user()->formTemplates()->create([
             'category_id' => $category->id,
             'name' => $request->name,
@@ -41,13 +36,8 @@ class FormTemplateController extends Controller
         return view('admin.form_template.edit', compact('formTemplate'));
     }
 
-    public function update(Request $request, FormTemplate $formTemplate)
+    public function update(FormTemplateRequest $request, FormTemplate $formTemplate)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
         $formTemplate->update([
             'name' => $request->name,
             'description' => $request->description,

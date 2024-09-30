@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\FieldTypes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FormField extends Model
 {
@@ -17,7 +18,6 @@ class FormField extends Model
         'name',
         'label',
         'type',
-        'options',
         'is_required',
     ];
 
@@ -25,7 +25,7 @@ class FormField extends Model
         'type' => FieldTypes::class,
     ];
 
-    public function form()
+    public function form(): BelongsTo
     {
         return $this->belongsTo(FormTemplate::class);
     }

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('type');
             $table->string('name');
             $table->string('label');
-            $table->text('options')->nullable();
             $table->boolean('is_required')->default(true);
         });
     }
