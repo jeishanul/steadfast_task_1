@@ -10,6 +10,8 @@ class SubmittedFormData extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'submitted_form_id',
         'form_field_id',

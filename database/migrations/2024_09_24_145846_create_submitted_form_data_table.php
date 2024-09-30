@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignIdFor(SubmittedForm::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(FormField::class)->constrained()->cascadeOnDelete();
             $table->string('field_value');
-            $table->timestamps();
         });
     }
 

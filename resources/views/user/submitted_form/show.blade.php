@@ -6,7 +6,12 @@
     <div class="col-12 mt-4">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="card-title w-100">{{ $formTemplate->name }}</h3>
+                <div class="w-100">
+                    <h3 class="card-title text-bold w-100">{{ $formTemplate->name }}</h3>
+                    @if ($formTemplate->description)
+                        <p class="card-description text-danger w-100">{{ $formTemplate->description }}</p>
+                    @endif
+                </div>
                 <div class="w-100">
                     <a href="{{ route('user.submitted.form.show', $formTemplate) }}" class="btn btn-primary float-right"><i
                             class="fas fa-arrow-left mr-2"></i>{{ __('Back') }}</a>

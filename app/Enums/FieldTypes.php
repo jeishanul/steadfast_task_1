@@ -8,9 +8,8 @@ enum FieldTypes : string
     case EMAIL = 'email';
     case NUMBER = 'number';
     case DATE = 'date';
-    case SELECT = 'select';
-    case FILE = 'file';
-    case RADIO = 'radio';
     case CHECKBOX = 'checkbox';
     case TEXTAREA = 'textarea';
+    case SELECT = 'select';
+    case RADIO = 'radio';
 }

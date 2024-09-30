@@ -10,6 +10,8 @@ class FormField extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'form_id',
         'name',

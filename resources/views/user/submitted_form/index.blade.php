@@ -29,7 +29,7 @@
                                     <td>{{ Str::limit($template->description ?? 'N/A', 50) }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            @if (in_array(request()->user()->id, $template->submittedForm()->pluck('user_id')->toArray()))
+                                            @if (!in_array(request()->user()->id, $template->submittedForm()->pluck('user_id')->toArray()))
                                                 <a href="{{ route('user.submitted.form.show', $template) }}"
                                                     class="btn btn-success">
                                                     <i class="fa fa-file"></i>
@@ -39,17 +39,19 @@
                                                     data-target="#submittedFormData{{ $template->id }}">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-
+                                                @php
+                                                    $submittedFormData = $template->submittedForm()->where('user_id', request()->user()->id)->first();
+                                                @endphp
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="submittedFormData{{ $template->id }}"
                                                     tabindex="-1" role="dialog"
-                                                    aria-labelledby="submittedFormDataTitle{{ submittedFormDataTitle }}"
+                                                    aria-labelledby="submittedFormDataTitle{{ $template->id }}"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title"
-                                                                    id="submittedFormDataTitle{{ submittedFormDataTitle }}">
+                                                                    id="submittedFormDataTitle{{ $template->id }}">
                                                                     {{ __('Submitted Data') }}
                                                                 </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
@@ -58,7 +60,24 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                ...
+                                                                <table class="table table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>{{ __('S/N') }}</th>
+                                                                            <th>{{ __('Name') }}</th>
+                                                                            <th>{{ __('Value') }}</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($submittedFormData->formSubmissionData as $key => $formSubmissionData)
+                                                                            <tr>
+                                                                                <td>{{ $loop->iteration }}</td>
+                                                                                <td>{{ $formSubmissionData->formField?->label }}</td>
+                                                                                <td>{{ $formSubmissionData->field_value }}</td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
