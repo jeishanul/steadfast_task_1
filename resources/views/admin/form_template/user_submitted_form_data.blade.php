@@ -8,7 +8,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="card-title w-100">{{ __('Submitted Form Data') }}</div>
                 <div class="w-100">
-                    <a href="{{ route('admin.form.template.index', $category) }}" class="btn btn-primary float-right"><i class="fas fa-arrow-left mr-2"></i>{{ __('Back') }}</a>
+                    <a href="{{ route('admin.form.template.index', $formTemplate->category) }}" class="btn btn-primary float-right"><i class="fas fa-arrow-left mr-2"></i>{{ __('Back') }}</a>
                 </div>
             </div>
             <div class="card-body table-responsive p-0">
