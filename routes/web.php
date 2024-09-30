@@ -59,9 +59,8 @@ Route::middleware(['auth'])->group(function () {
         // Submitted Form Routes (Users)
         Route::controller(SubmittedFormController::class)->group(function () {
             Route::get('/',  'index')->name('user.submitted.forms.index');
-            Route::get('/form-templates/{formTemplateId}/form', 'showForm')->name('form_submissions.show');
-            Route::post('/form-templates/{formTemplateId}/form',  'storeSubmission')->name('form_submissions.store');
-            Route::get('/form-submissions/{submittedForm}',  'showSubmission')->name('form_submissions.show_submission');
+            Route::get('/form-template/{formTemplate}/form', 'showForm')->name('user.submitted.form.show');
+            Route::post('/form-templates/{formTemplate}/form/submission',  'storeSubmission')->name('user.form.data.store');
         });
     });
 });

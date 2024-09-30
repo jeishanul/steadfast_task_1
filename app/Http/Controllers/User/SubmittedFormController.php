@@ -12,40 +12,35 @@ class SubmittedFormController extends Controller
 {
     public function index()
     {
-        $submissions = request()->user()->submittedForms;
-        return view('user.submitted_forms.index', compact('submissions'));
+        $formTemplates = FormTemplate::paginate(10);
+        return view('user.form_templates', compact('formTemplates'));
     }
 
-    public function showForm($formTemplateId)
+    public function showForm(FormTemplate $formTemplate)
     {
-        $formTemplate = FormTemplate::with('formFields')->findOrFail($formTemplateId);
-        return view('form_submissions.show', compact('formTemplate'));
+        $formTemplate->load('formFields');
+        return view('user.submitted_forms.show', compact('formTemplate'));
     }
 
-    public function storeSubmission(Request $request, $formTemplateId)
+    public function storeSubmission(Request $request, FormTemplate $formTemplate)
     {
-        $formTemplate = FormTemplate::with('formFields')->findOrFail($formTemplateId);
-        $submission = new SubmittedForm([
-            'user_id' => $request->user()->id,
-            'form_template_id' => $formTemplateId,
+        $request->validate([
+            'formFields' => 'required|array',
         ]);
-        $submission->save();
 
-        foreach ($formTemplate->formFields as $field) {
-            $value = $request->input('field_' . $field->id);
-            SubmittedFormData::create([
-                'form_submission_id' => $submission->id,
-                'form_field_id' => $field->id,
+        $submission = $request->user()->submittedForm()->create([
+            'form_template_id' => $formTemplate->id,
+        ]);
+
+        $fields = collect($request->formFields)->map(function ($value, $key) {
+            return [
+                'form_field_id' => $key,
                 'field_value' => $value,
-            ]);
-        }
+            ];
+        });
+
+        $submission->formSubmissionData()->createMany($fields);
 
         return redirect()->route('user.submitted.forms.index')->with('success', 'Form submitted successfully');
-    }
-
-    public function showSubmission(SubmittedForm $submittedForm)
-    {
-        $submission = $submittedForm->load('formSubmissionData');
-        return view('user.form_submissions.show', compact('submission'));
     }
 }

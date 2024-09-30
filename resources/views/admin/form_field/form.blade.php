@@ -30,7 +30,7 @@
                             </div>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="addOptionField{{ $key }}" tabindex="-1"
+                            {{-- <div class="modal fade" id="addOptionField{{ $key }}" tabindex="-1"
                                 role="dialog" aria-labelledby="addOptionFieldTitle{{ $key }}"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -70,7 +70,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="col-lg-3 margin_top_40">

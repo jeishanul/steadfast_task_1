@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\Roles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -60,8 +61,8 @@ class User extends Authenticatable
         return $this->hasMany(FormTemplate::class, 'admin_id', 'id');
     }
 
-    public function submittedForms(): HasMany
+    public function submittedForm(): HasOne
     {
-        return $this->hasMany(SubmittedForm::class);
+        return $this->hasOne(SubmittedForm::class);
     }
 }

@@ -3,30 +3,36 @@
 @section('title', 'Fill Form')
 
 @section('content')
-    <h1>{{ $formTemplate->name }}</h1>
-
-    <form action="{{ route('form_submissions.store', $formTemplate->id) }}" method="POST">
-        @csrf
-        @foreach ($formTemplate->formFields as $field)
-            <label for="field_{{ $field->id }}">{{ $field->label }}</label>
-
-            @if ($field->field_type === 'text')
-                <input type="text" id="field_{{ $field->id }}" name="field_{{ $field->id }}"
-                    @if ($field->is_required) required @endif>
-            @elseif($field->field_type === 'textarea')
-                <textarea id="field_{{ $field->id }}" name="field_{{ $field->id }}"
-                    @if ($field->is_required) required @endif></textarea>
-            @elseif($field->field_type === 'checkbox')
-                <input type="checkbox" id="field_{{ $field->id }}" name="field_{{ $field->id }}">
-            @elseif($field->field_type === 'radio')
-                <!-- Add radio options based on field options -->
-            @elseif($field->field_type === 'select')
-                <select id="field_{{ $field->id }}" name="field_{{ $field->id }}">
-                    <!-- Add select options based on field options -->
-                </select>
-            @endif
-        @endforeach
-
-        <button type="submit">Submit</button>
-    </form>
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title w-100">{{ $formTemplate->name }}</h3>
+                <div class="w-100">
+                    <a href="{{ route('user.submitted.form.show', $formTemplate) }}" class="btn btn-primary float-right"><i
+                            class="fas fa-arrow-left mr-2"></i>{{ __('Back') }}</a>
+                </div>
+            </div>
+            <form role="form" action="{{ route('user.form.data.store', $formTemplate) }}" method="POST">
+                @csrf
+                <div class="card-body">
+                    <div class="row">
+                        @foreach ($formTemplate->formFields as $key => $field)
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="{{ $field->name }}">{{ $field->label }} {!! $field->is_required == 1 ? '<span class="text-danger">*</span>' : '' !!}</label>
+                                    <input type="{{ $field->type }}" class="form-control"
+                                        name="formFields[{{ $field->id }}]{{ $field->name }}" id="{{ $field->name }}"
+                                        placeholder="Enter your {{ $field->label }}"
+                                        {{ $field->is_required == 1 ? 'required' : '' }}>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <x-button type="submit" class="btn btn-primary float-right" label="Submit" />
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
