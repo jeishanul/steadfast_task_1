@@ -37,6 +37,10 @@
                                                 class="btn btn-success">
                                                 <i class="fa fa-file"></i>
                                             </a>
+                                            <a href="{{ route('admin.form.template.user_submitted.form.data', $template) }}"
+                                                class="btn btn-success">
+                                                <i class="fa fa-entry"></i>
+                                            </a>
                                             <a href="{{ route('admin.form.template.edit', $template) }}"
                                                 class="btn btn-primary">
                                                 <i class="fas fa-edit"></i>

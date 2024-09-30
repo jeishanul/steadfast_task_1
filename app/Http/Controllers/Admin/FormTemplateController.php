@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FormTemplateRequest;
 use App\Models\Category;
 use App\Models\FormTemplate;
+use App\Models\SubmittedForm;
 
 class FormTemplateController extends Controller
 {
     public function index(Category $category)
     {
-        $formTemplates = $category->formTemplates()->paginate(10);;
+        $formTemplates = $category->formTemplates()->paginate(10);
         return view('admin.form_template.index', compact('formTemplates', 'category'));
     }
 
@@ -42,8 +43,13 @@ class FormTemplateController extends Controller
             'name' => $request->name,
             'description' => $request->description,
         ]);
-        
+
         return redirect()->route('admin.form.template.index', $formTemplate->category_id)->with('success', 'Form template updated successfully');
+    }
+    public function userSubmittedFormData(FormTemplate $formTemplate)
+    {
+        $submittedForms = $formTemplate->submittedForms()->with('formTemplate', 'formSubmissionData', 'user')->paginate(10);
+        return view('admin.form_template.user_submitted_form_data', compact('submittedForms', 'formTemplate'));
     }
 
     public function destroy($id)

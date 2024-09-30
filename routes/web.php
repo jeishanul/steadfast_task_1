@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('{category}/form-template/store', 'store')->name('admin.form.template.store');
             Route::get('form-template/{formTemplate}/edit', 'edit')->name('admin.form.template.edit');
             Route::put('form-template/{formTemplate}/update', 'update')->name('admin.form.template.update');
+            Route::get('form-template/{formTemplate}/user-submitted', 'userSubmittedFormData')->name('admin.form.template.user_submitted.form.data');
             Route::delete('form-template/{formTemplate}/destroy', 'destroy')->name('admin.form.template.destroy');
         });
         // Form Field Routes (Admin)
