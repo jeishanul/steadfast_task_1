@@ -1,6 +1,4 @@
-<footer class="main-footer">
-    <div class="float-right d-none d-sm-inline">
-        Anything you want
-    </div>
-    <strong>Copyright &copy; 2014-2021 <a href="{{ config('app.url') }}">{{ config('app.name') }}</a>.</strong> All rights reserved.
+<footer class="main-footer text-center">
+    <strong>Copyright &copy; {{ date('Y') }} <a href="https://github.com/jeishanul">{{ __('M.D Jeishanul Haque Shishir') }}</a>.</strong>
+    All rights reserved.
 </footer>

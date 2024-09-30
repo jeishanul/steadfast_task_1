@@ -34,6 +34,6 @@ class FormFieldController extends Controller
 
         $formTemplate->formFields()->createMany($fields);
 
-        return redirect()->route('admin.form.template.index', $formTemplate)->withSuccess(__('Form field created successfully'));
+        return redirect()->route('admin.form.template.index', $formTemplate->category)->withSuccess(__('Form field created successfully'));
     }
 }

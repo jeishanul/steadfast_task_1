@@ -9,9 +9,9 @@ use App\Http\Controllers\User\SubmittedFormController;
 use Illuminate\Support\Facades\Route;
 
 // Routes for Guest
-Route::middleware(['redirect:guest'])->group(function () {
     // Routes for Login
     Route::controller(LoginController::class)->group(function () {
+        Route::get('/', 'login')->name('home');
         Route::get('login', 'login')->name('login');
         Route::post('login', 'loginRequest')->name('login.request');
     });
@@ -20,7 +20,7 @@ Route::middleware(['redirect:guest'])->group(function () {
         Route::get('register/{role}', 'register')->name('register');
         Route::post('register', 'registerRequest')->name('register.request');
     });
-});
+
 
 // Routes for Authenticated
 Route::middleware(['auth'])->group(function () {
@@ -54,12 +54,12 @@ Route::middleware(['auth'])->group(function () {
         });
     });
     // Routes for User
-    Route::middleware('redirect:user')->group(function () {
+    Route::middleware('redirect:user')->prefix('user')->group(function () {
         // Routes for User Logout
         Route::get('logout', [LoginController::class, 'logout'])->name('user.logout');
         // Submitted Form Routes (Users)
         Route::controller(SubmittedFormController::class)->group(function () {
-            Route::get('/',  'index')->name('user.submitted.forms.index');
+            Route::get('/form-templates',  'index')->name('user.submitted.forms.index');
             Route::get('/form-template/{formTemplate}/form', 'showForm')->name('user.submitted.form.show');
             Route::post('/form-templates/{formTemplate}/form/submission',  'storeSubmission')->name('user.form.data.store');
         });

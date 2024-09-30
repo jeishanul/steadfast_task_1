@@ -22,13 +22,23 @@
                 <div class="card-body">
                     <div class="row">
                         @foreach ($formTemplate->formFields as $key => $field)
-                            @if ($field->type == 'textarea')
+                            @if ($field->type->value == 'textarea')
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="{{ $field->name }}">{{ $field->label }} {!! $field->is_required == 1 ? '<span class="text-danger">*</span>' : '' !!}</label>
                                         <textarea type="{{ $field->type }}" class="form-control" name="formFields[{{ $field->id }}]{{ $field->name }}"
                                             id="{{ $field->name }}" placeholder="Enter your {{ $field->label }}" rows="5"
                                             {{ $field->is_required == 1 ? 'required' : '' }}></textarea>
+                                    </div>
+                                </div>
+                            @elseif ($field->type->value == 'checkbox')
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="formFields[{{ $field->id }}]{{ $field->name }}" value="yes"
+                                            class="form-check-input" id="{{ $field->name }}">
+                                        <label class="form-check-label" for="{{ $field->name }}"
+                                            {{ $field->is_required == 1 ? 'required' : '' }}>{{ $field->label }}
+                                            {!! $field->is_required == 1 ? '<span class="text-danger">*</span>' : '' !!}</label>
                                     </div>
                                 </div>
                             @else

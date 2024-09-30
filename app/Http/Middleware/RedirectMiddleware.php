@@ -16,12 +16,12 @@ class RedirectMiddleware
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
-        return $next($request);
-        // dd($guards);
-        // if (Auth::check() && Auth::user()->role->value === 'admin') {
-        //     return $next($request);
-        // }
-
-        // return redirect()->route('user.submitted.forms.index');
+        if (Auth::check() && Auth::user()->role->value === $guards[0]) {
+            return $next($request);
+        } else if (!Auth::check()) {
+            return to_route('login');
+        } else {
+            return abort(403);
+        }
     }
 }

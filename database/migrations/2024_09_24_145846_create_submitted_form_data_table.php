@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(SubmittedForm::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(FormField::class)->constrained()->cascadeOnDelete();
-            $table->string('field_value');
+            $table->string('field_value')->nullable();
         });
     }
 

@@ -29,8 +29,18 @@
                                     <td>{{ Str::limit($template->description ?? 'N/A', 50) }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            @if (!in_array(request()->user()->id, $template->submittedForm()->pluck('user_id')->toArray()))
+                                            @php
+                                                $userId = Auth::user()->id;
+                                                $submittedForm = $template
+                                                    ->submittedForms()
+                                                    ->where('user_id', $userId)
+                                                    ->first();
+                                                $isFormSubmitted = $submittedForm !== null;
+                                            @endphp
+
+                                            @if (!$isFormSubmitted)
                                                 <a href="{{ route('user.submitted.form.show', $template) }}"
+                                                    data-toggle="tooltip" data-placement="top" title="Preview Form"
                                                     class="btn btn-success">
                                                     <i class="fa fa-file"></i>
                                                 </a>
@@ -39,9 +49,7 @@
                                                     data-target="#submittedFormData{{ $template->id }}">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                @php
-                                                    $submittedFormData = $template->submittedForm()->where('user_id', request()->user()->id)->first();
-                                                @endphp
+
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="submittedFormData{{ $template->id }}"
                                                     tabindex="-1" role="dialog"
@@ -60,24 +68,32 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <table class="table table-hover">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>{{ __('S/N') }}</th>
-                                                                            <th>{{ __('Name') }}</th>
-                                                                            <th>{{ __('Value') }}</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($submittedFormData->formSubmissionData as $key => $formSubmissionData)
+                                                                @if ($submittedForm && $submittedForm->formSubmissionData->isNotEmpty())
+                                                                    <table class="table table-hover">
+                                                                        <thead>
                                                                             <tr>
-                                                                                <td>{{ $loop->iteration }}</td>
-                                                                                <td>{{ $formSubmissionData->formField?->label }}</td>
-                                                                                <td>{{ $formSubmissionData->field_value }}</td>
+                                                                                <th>{{ __('S/N') }}</th>
+                                                                                <th>{{ __('Name') }}</th>
+                                                                                <th>{{ __('Value') }}</th>
                                                                             </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach ($submittedForm->formSubmissionData as $key => $formSubmissionData)
+                                                                                <tr>
+                                                                                    <td>{{ $loop->iteration }}</td>
+                                                                                    <td>
+                                                                                        {{ $formSubmissionData->formField?->label ?? __('N/A') }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ $formSubmissionData->field_value ?? __('N/A') }}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                @else
+                                                                    <p>{{ __('No submission data available.') }}</p>
+                                                                @endif
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"

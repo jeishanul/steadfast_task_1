@@ -34,14 +34,15 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{ route('admin.form.template.index', $category) }}"
+                                                data-toggle="tooltip" data-placement="top" title="Form Templates"
                                                 class="btn btn-success">
                                                 <i class="fa fa-file"></i>
                                             </a>
                                             <a href="{{ route('admin.category.edit', $category->id) }}"
+                                                data-toggle="tooltip" data-placement="top" title="Category Edit"
                                                 class="btn btn-primary">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>

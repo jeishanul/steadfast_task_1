@@ -34,21 +34,20 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{ route('admin.form.field.create', $template) }}"
-                                                class="btn btn-success">
+                                            data-toggle="tooltip" data-placement="top" title="Form Fields Create"
+                                                class="btn btn-info">
                                                 <i class="fa fa-file"></i>
                                             </a>
                                             <a href="{{ route('admin.form.template.user_submitted.form.data', $template) }}"
+                                            data-toggle="tooltip" data-placement="top" title="Form Submitted User Data"
                                                 class="btn btn-success">
-                                                <i class="fa fa-entry"></i>
+                                                <i class="fa fa-user-plus"></i>
                                             </a>
                                             <a href="{{ route('admin.form.template.edit', $template) }}"
+                                            data-toggle="tooltip" data-placement="top" title="Form Template Edit"
                                                 class="btn btn-primary">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <button class="btn btn-danger"
-                                                data-action="{{ route('admin.form.template.destroy', $template) }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>
