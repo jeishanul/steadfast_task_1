@@ -35,9 +35,40 @@
                                                     <i class="fa fa-file"></i>
                                                 </a>
                                             @else
-                                                <button class="btn btn-primary">
+                                                <button class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#submittedFormData{{ $template->id }}">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="submittedFormData{{ $template->id }}"
+                                                    tabindex="-1" role="dialog"
+                                                    aria-labelledby="submittedFormDataTitle{{ submittedFormDataTitle }}"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"
+                                                                    id="submittedFormDataTitle{{ submittedFormDataTitle }}">
+                                                                    {{ __('Submitted Data') }}
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                ...
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">
+                                                                    {{ __('Close') }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </td>

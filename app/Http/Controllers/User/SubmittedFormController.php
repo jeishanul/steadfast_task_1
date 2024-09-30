@@ -4,8 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\FormTemplate;
-use App\Models\SubmittedForm;
-use App\Models\SubmittedFormData;
 use Illuminate\Http\Request;
 
 class SubmittedFormController extends Controller
@@ -13,13 +11,13 @@ class SubmittedFormController extends Controller
     public function index()
     {
         $formTemplates = FormTemplate::paginate(10);
-        return view('user.form_templates', compact('formTemplates'));
+        return view('user.submitted_form.index', compact('formTemplates'));
     }
 
     public function showForm(FormTemplate $formTemplate)
     {
         $formTemplate->load('formFields');
-        return view('user.submitted_forms.show', compact('formTemplate'));
+        return view('user.submitted_form.show', compact('formTemplate'));
     }
 
     public function storeSubmission(Request $request, FormTemplate $formTemplate)
